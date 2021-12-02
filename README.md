@@ -1,8 +1,5 @@
 # MMM-Notification
 
-This modules will allow to send notification on external application:
- * Facebook
- * Whatsapp
- * SMS on phone
+This modules will display some notifications from another module
 
 ![](https://raw.githubusercontent.com/bugsounet/coding/main/underconstruction.gif)
