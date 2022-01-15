@@ -1,4 +1,4 @@
-# MMM-Notification
+# EXT-Alert
 
 This modules will display some notifications from another module
 

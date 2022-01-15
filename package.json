@@ -1,5 +1,5 @@
 {
-  "name": "MMM-Notification",
+  "name": "EXT-Alert",
   "version": "0.0.1",
   "rev": "211202-1",
   "description": "An embedded Notification Displayer on MagicMirror.",
