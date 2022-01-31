@@ -24,7 +24,7 @@ Module.register("EXT-Alert", {
         event: "warning",
         icon: "modules/EXT-Alert/resources/warning.gif",
         timer: 3000,
-        sound: "modules/EXT-Alert/resources/warning.mp3"
+        sound: "modules/EXT-Alert/resources/warning.ogg"
       },
       {
         event: "error",
@@ -36,7 +36,7 @@ Module.register("EXT-Alert", {
         event: "information",
         icon: "modules/EXT-Alert/resources/information.gif",
         timer: 3000,
-        sound: "modules/EXT-Alert/resources/warning.mp3"
+        sound: null
       }
     ]
   },
@@ -54,19 +54,28 @@ Module.register("EXT-Alert", {
     return dom
   },
 
-  notificationReceived: function(noti, payload) {
+  notificationReceived: function(noti, payload, sender) {
     switch(noti) {
       case "DOM_OBJECTS_CREATED":
         this.prepareAlertPopup()
         this.sendSocketNotification("INIT", this.config)
         this.sendNotification("EXT_HELLO", this.name)
-        this.Alert("error", { message: "I test Display ! avec timerForce: 6 sec", timer: 6000})
+        break
+      case "EXT_ALERT":
+       if (!payload) return  this.Alert("error", {message: "Alert error by:" + sender } )
+        let sendThis= {
+          type: payload.type ? payload.type : "error",
+          message: payload.message ? payload.message : "Unknow message",
+          timer: payload.timer ? payload.timer : null,
+          sender: sender.name
+        }
+        this.Alert(sendThis.type, { message: sendThis.message, timer: sendThis.timer, sender: sendThis.sender })
         break
     }
   },
 
   /** alert buffer to array **/
-  Alert(wantedType,info) {
+  Alert: function(wantedType,info) {
     var alertObject = {
       type: null,
       info: info
@@ -148,7 +157,7 @@ Module.register("EXT-Alert", {
   AlertLogo: function (type) {
     var Logo = document.getElementById("EXT-Alert-Icon")
     Logo.src = type.icon
-    if (type.sound) this.sound.src = type.sound
+    if (type.sound) this.sound.src = type.sound+ "?seed="+Date.now
   },
 
   AlertHide: function () {
