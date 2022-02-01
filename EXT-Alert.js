@@ -75,7 +75,7 @@ Module.register("EXT-Alert", {
   },
 
   /** alert buffer to array **/
-  Alert: function(wantedType,info) {
+  Alert: function(wantedType, info) {
     var alertObject = {
       type: null,
       info: info
@@ -123,12 +123,23 @@ Module.register("EXT-Alert", {
     Alert_Icon.src = "/modules/EXT-Alert/resources/warning.gif"
     Alert_Bar.appendChild(Alert_Icon)
 
+    var Alert_Displayer = document.createElement("div")
+    Alert_Displayer.id= "EXT-Alert-Displayer"
+    Alert_Displayer.className="EXT-Alert-displayer"
+    Alert_Bar.appendChild(Alert_Displayer)
+
     //transcription informations text
     var Alert_Response = document.createElement("span")
     Alert_Response.id= "EXT-Alert-Message"
     Alert_Response.className="EXT-Alert-response"
     Alert_Response.textContent= "~EXT-Alert Displayer~"
-    Alert_Bar.appendChild(Alert_Response)
+    Alert_Displayer.appendChild(Alert_Response)
+
+    var Alert_Sender = document.createElement("span")
+    Alert_Sender.id= "EXT-Alert-Sender"
+    Alert_Sender.className="EXT-Alert-sender"
+    Alert_Sender.textContent= "by MMM-Alert"
+    Alert_Displayer.appendChild(Alert_Sender)
 
     document.body.appendChild(Alert)
   },
@@ -151,7 +162,9 @@ Module.register("EXT-Alert", {
 
   AlertInformations: function (message) {
     var Message = document.getElementById("EXT-Alert-Message")
+    var Sender = document.getElementById("EXT-Alert-Sender")
     Message.textContent = this.translate(message.message, { VALUES: message.values })
+    Sender.textContent = message.sender ? message.sender : "MMM-Alert"
   },
 
   AlertLogo: function (type) {
