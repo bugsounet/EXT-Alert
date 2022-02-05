@@ -147,13 +147,11 @@ Module.register("EXT-Alert", {
   /** Informations Display with translate from buffer **/
   AlertBuffer: function(type, message) {
     if (this.alerts.displayed || !this.alerts.buffer.length) return
-    logALERT(type + ":", message)
     this.AlertLogo(type)
     this.AlertInformations(message)
     this.AlertShow()
 
     let timer = message.timer ? message.timer : (type.timer ? type.timer : this.config.timer)
-    logALERT("Timer", timer)
 
     this.warningTimeout = setTimeout(() => {
       this.AlertHide()
