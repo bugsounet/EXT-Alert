@@ -8,7 +8,7 @@ This module is an Extented for `MMM-GoogleAssistant` v4.x, you can naturally use
 
 With `MMM-GoogleAssistant` v4.x, this module replace the default alert module !
 
-## Screenshot
+## Screenshot [todo]
 ![](https://raw.githubusercontent.com/bugsounet/EXT-Alert/dev/screenshot.png)
 
 ## Installation / update / configuration
