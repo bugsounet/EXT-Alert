@@ -9,7 +9,7 @@ logALERT = (...args) => { /* do nothing */ }
 
 Module.register("EXT-Alert", {
   defaults: {
-    debug: true,
+    debug: false,
     timer: 3000
   },
 
