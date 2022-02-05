@@ -67,7 +67,7 @@ Module.register("EXT-Alert", {
           type: payload.type ? payload.type : "error",
           message: payload.message ? payload.message : "Unknow message",
           timer: payload.timer ? payload.timer : null,
-          sender: sender.name
+          sender: payload.sender ? payload.sender : sender.name
         }
         this.Alert(sendThis.type, { message: sendThis.message, timer: sendThis.timer, sender: sendThis.sender })
         break

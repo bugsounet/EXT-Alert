@@ -1,9 +1,9 @@
 {
   "name": "EXT-Alert",
-  "version": "0.0.1",
-  "rev": "211202-1",
-  "description": "An embedded Notification Displayer on MagicMirror.",
-  "main": "MMM-Notification.js",
+  "version": "1.0.0",
+  "rev": "220205",
+  "description": "An embedded Alert Notification Displayer on MagicMirror.",
+  "main": "EXT-Alert.js",
   "scripts": {
     "preinstall": "installer/preinstall.sh",
     "postinstall": "installer/postinstall.sh"
@@ -12,16 +12,17 @@
     "magic mirror",
     "module",
     "notification",
-    "warning"
+    "warning",
+    "alert"
   ],
   "author": "bugsounet",
   "license": "MIT",
   "bugs": {
-    "url": "http://forum.bugsounet.fr"
+    "url": "https://forum.bugsounet.fr"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bugsounet/MMM-Notification"
+    "url": "https://github.com/bugsounet/EXT-Alert"
   },
-  "homepage": "http://wiki.bugsounet.fr/en/MMM-Notification"
+  "homepage": "https://wiki.bugsounet.fr/en/EXT-Alert"
 }
