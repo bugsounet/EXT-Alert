@@ -9,8 +9,7 @@ logALERT = (...args) => { /* do nothing */ }
 
 Module.register("EXT-Alert", {
   defaults: {
-    debug: false,
-    timer: 3000
+    debug: false
   },
 
   start: function () {
@@ -23,22 +22,23 @@ Module.register("EXT-Alert", {
       {
         event: "warning",
         icon: "modules/EXT-Alert/resources/warning.gif",
-        timer: 3000,
+        timer: 5000,
         sound: "modules/EXT-Alert/resources/warning.ogg"
       },
       {
         event: "error",
         icon: "modules/EXT-Alert/resources/error.gif",
-        timer: 3000,
+        timer: 5000,
         sound: "modules/EXT-Alert/resources/error.mp3"
       },
       {
         event: "information",
         icon: "modules/EXT-Alert/resources/information.gif",
-        timer: 3000,
+        timer: 5000,
         sound: null
       }
     ]
+    this.prepareAlertPopup() // better place for create main popup quickly !
   },
 
   getStyles: function () {
@@ -57,32 +57,32 @@ Module.register("EXT-Alert", {
   notificationReceived: function(noti, payload, sender) {
     switch(noti) {
       case "DOM_OBJECTS_CREATED":
-        this.prepareAlertPopup()
         this.sendSocketNotification("INIT", this.config)
         this.sendNotification("EXT_HELLO", this.name)
         break
       case "EXT_ALERT":
        if (!payload) return  this.Alert("error", {message: "Alert error by:" + sender } )
-        let sendThis= {
+        this.Alert({
           type: payload.type ? payload.type : "error",
           message: payload.message ? payload.message : "Unknow message",
           timer: payload.timer ? payload.timer : null,
-          sender: payload.sender ? payload.sender : sender.name
-        }
-        this.Alert(sendThis.type, { message: sendThis.message, timer: sendThis.timer, sender: sendThis.sender })
+          sender: payload.sender ? payload.sender : sender.name,
+          icon: payload.icon ? payload.icon: null,
+          sound: payload.sound ? payload.sound: null
+        })
         break
     }
   },
 
   /** alert buffer to array **/
-  Alert: function(wantedType, info) {
+  Alert: function(info) {
     var alertObject = {
       type: null,
       info: info
     }
     
     this.types.forEach((type) => {
-      if (type.event == wantedType) alertObject.type = type
+      if (type.event == info.type) alertObject.type = type
     })
     if (!info.message) { // should not happen
       logALERT("debug information:", info)
@@ -147,11 +147,15 @@ Module.register("EXT-Alert", {
   /** Informations Display with translate from buffer **/
   AlertBuffer: function(type, message) {
     if (this.alerts.displayed || !this.alerts.buffer.length) return
-    this.AlertLogo(type)
+    this.AlertLogo(type, message)
     this.AlertInformations(message)
     this.AlertShow()
 
-    let timer = message.timer ? message.timer : (type.timer ? type.timer : this.config.timer)
+    let timer = message.timer ? message.timer : type.timer
+
+    // define timer limit...
+    if (timer < 3000) timer = 3000
+    if (timer > 30000) timer = 30000
 
     this.warningTimeout = setTimeout(() => {
       this.AlertHide()
@@ -165,10 +169,11 @@ Module.register("EXT-Alert", {
     Sender.textContent = message.sender ? message.sender : "MMM-Alert"
   },
 
-  AlertLogo: function (type) {
+  AlertLogo: function (type, info) {
     var Logo = document.getElementById("EXT-Alert-Icon")
-    Logo.src = type.icon
-    if (type.sound) this.sound.src = type.sound+ "?seed="+Date.now
+    console.log(info)
+    Logo.src = info.icon ? info.icon : type.icon
+    if (type.sound || info.sound) this.sound.src = (info.sound ? info.sound : type.sound) + "?seed="+Date.now
   },
 
   AlertHide: function () {
