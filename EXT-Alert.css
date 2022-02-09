@@ -1,6 +1,6 @@
 /** Alert **/
 #EXT-Alert {
-  z-index:2;
+  z-index:99999;
   bottom:auto;
   box-sizing:border-box;
   font-family:"Roboto",sans-serif;
