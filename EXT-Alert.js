@@ -1,7 +1,7 @@
 /**
  ** Module : EXT-Alert
  ** @bugsounet
- ** ©01-2022
+ ** ©02-2022
  ** support: http://forum.bugsounet.fr
  **/
 
@@ -9,7 +9,8 @@ logALERT = (...args) => { /* do nothing */ }
 
 Module.register("EXT-Alert", {
   defaults: {
-    debug: false
+    debug: false,
+    ignore: []
   },
 
   start: function () {
@@ -39,6 +40,13 @@ Module.register("EXT-Alert", {
       }
     ]
     this.prepareAlertPopup() // better place for create main popup quickly !
+
+    //check ignore modules array (prevent crash)
+    if (!Array.isArray(this.config.ignore)) {
+      let tmp = this.config.ignore
+      this.config.ignore = []
+      if (tmp) this.config.ignore.push(tmp)
+    }
   },
 
   getStyles: function () {
@@ -61,7 +69,8 @@ Module.register("EXT-Alert", {
         this.sendNotification("EXT_HELLO", this.name)
         break
       case "EXT_ALERT":
-       if (!payload) return  this.Alert("error", {message: "Alert error by:" + sender } )
+        if (this.config.ignore.indexOf(sender.name) >= 0) return
+        if (!payload) return  this.Alert("error", {message: "Alert error by:" + sender } )
         this.Alert({
           type: payload.type ? payload.type : "error",
           message: payload.message ? payload.message : "Unknow message",
