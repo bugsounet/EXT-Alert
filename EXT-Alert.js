@@ -147,7 +147,7 @@ Module.register("EXT-Alert", {
     var Alert_Sender = document.createElement("span")
     Alert_Sender.id= "EXT-Alert-Sender"
     Alert_Sender.className="EXT-Alert-sender"
-    Alert_Sender.textContent= "by MMM-Alert"
+    Alert_Sender.textContent= "by EXT-Alert"
     Alert_Displayer.appendChild(Alert_Sender)
 
     document.body.appendChild(Alert)
@@ -175,7 +175,7 @@ Module.register("EXT-Alert", {
     var Message = document.getElementById("EXT-Alert-Message")
     var Sender = document.getElementById("EXT-Alert-Sender")
     Message.textContent = this.translate(message.message, { VALUES: message.values })
-    Sender.textContent = message.sender ? message.sender : "MMM-Alert"
+    Sender.textContent = message.sender ? message.sender : "EXT-Alert"
   },
 
   AlertLogo: function (type, info) {
