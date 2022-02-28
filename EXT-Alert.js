@@ -66,6 +66,8 @@ Module.register("EXT-Alert", {
     switch(noti) {
       case "DOM_OBJECTS_CREATED":
         this.sendSocketNotification("INIT", this.config)
+        break
+      case "GA_READY":
         this.sendNotification("EXT_HELLO", this.name)
         break
       case "EXT_ALERT":
