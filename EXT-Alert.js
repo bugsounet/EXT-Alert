@@ -67,8 +67,8 @@ Module.register("EXT-Alert", {
       case "DOM_OBJECTS_CREATED":
         this.sendSocketNotification("INIT", this.config)
         break
-      case "GA_READY":
-        this.sendNotification("EXT_HELLO", this.name)
+      case "GAv4_READY":
+        if (sender.name == "MMM-GoogleAssistant") this.sendNotification("EXT_HELLO", this.name)
         break
       case "EXT_ALERT":
         if (this.config.ignore.indexOf(sender.name) >= 0) return
@@ -176,7 +176,7 @@ Module.register("EXT-Alert", {
   AlertInformations: function (message) {
     var Message = document.getElementById("EXT-Alert-Message")
     var Sender = document.getElementById("EXT-Alert-Sender")
-    Message.textContent = this.translate(message.message, { VALUES: message.values })
+    Message.innerHTML = this.translate(message.message, { VALUES: message.values })
     Sender.textContent = message.sender ? message.sender : "EXT-Alert"
   },
 
