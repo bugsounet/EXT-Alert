@@ -183,6 +183,7 @@ Module.register("EXT-Alert", {
   AlertLogo: function (type, info) {
     var Logo = document.getElementById("EXT-Alert-Icon")
     Logo.src = info.icon ? info.icon : type.icon
+    if (info.sound == "none") return
     if (type.sound || info.sound) this.sound.src = (info.sound ? info.sound : type.sound) + "?seed="+Date.now
   },
 
