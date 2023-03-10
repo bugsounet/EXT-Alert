@@ -1,8 +1,8 @@
 /**
  ** Module : EXT-Alert
  ** @bugsounet
- ** ©02-2022
- ** support: http://forum.bugsounet.fr
+ ** ©03-2023
+ ** support: https://forum.bugsounet.fr
  **/
 
 logALERT = (...args) => { /* do nothing */ }
