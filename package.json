@@ -25,5 +25,10 @@
     "type": "git",
     "url": "https://github.com/bugsounet/EXT-Alert"
   },
-  "homepage": "https://wiki.bugsounet.fr/en/EXT-Alert"
+  "homepage": "https://wiki.bugsounet.fr/en/EXT-Alert",
+  "dependencies": {
+    "check-node-version": "^4.2.1",
+    "glob": "^9.2.1",
+    "minify": "^9.2.0"
+  }
 }
