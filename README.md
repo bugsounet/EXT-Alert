@@ -1,10 +1,10 @@
-# EXT-Alert - Extented for `MMM-GoogleAssistant` v5.x
+# EXT-Alert - Extented for `MMM-GoogleAssistant`
 
 EXT-Alert is a module for the [MagicMirror](https://github.com/MichMich/MagicMirror) project by [Michael Teeuw](https://github.com/MichMich).
 
 It allow to display Alert and Notification of MagicMirror
 
-This module is an Extented for `MMM-GoogleAssistant` v5.x, you can naturally use it as a simple module !
+This module is an Extented for `MMM-GoogleAssistant`, you can naturally use it as a simple module !
 
 With `MMM-GoogleAssistant` v5.x, this module replace the default alert module !
 
