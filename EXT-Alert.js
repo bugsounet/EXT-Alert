@@ -48,7 +48,7 @@ Module.register("EXT-Alert", {
         }
         break
       case "EXT_ALERT":
-        if (this.config.ignore.indexOf(sender.name) >= 0 || !that.ready) return
+        if (this.config.ignore.indexOf(sender.name) >= 0 || !this.ready) return
         if (!payload) return  this.AlertCommander.Alert("error", {message: "Alert error by:" + sender } )
         this.AlertCommander.Alert({
           type: payload.type ? payload.type : "error",
