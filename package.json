@@ -1,7 +1,7 @@
 {
   "name": "EXT-Alert",
-  "version": "1.1.0",
-  "rev": "2203010",
+  "version": "1.2.0",
+  "rev": "230324",
   "description": "An embedded Alert Notification Displayer on MagicMirror.",
   "main": "EXT-Alert.js",
   "scripts": {

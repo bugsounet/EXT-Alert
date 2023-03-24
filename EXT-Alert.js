@@ -40,14 +40,15 @@ Module.register("EXT-Alert", {
 
   notificationReceived: function(noti, payload, sender) {
     switch(noti) {
-      case "DOM_OBJECTS_CREATED":
-        this.sendSocketNotification("INIT", this.config)
-        break
-      case "GAv5_READY":
-        if (sender.name == "MMM-GoogleAssistant") this.sendNotification("EXT_HELLO", this.name)
+      case "GW_READY":
+        if (sender.name == "Gateway") {
+          this.sendNotification("EXT_HELLO", this.name)
+          this.sendSocketNotification("INIT", this.config)
+          this.ready = true
+        }
         break
       case "EXT_ALERT":
-        if (this.config.ignore.indexOf(sender.name) >= 0) return
+        if (this.config.ignore.indexOf(sender.name) >= 0 || !that.ready) return
         if (!payload) return  this.AlertCommander.Alert("error", {message: "Alert error by:" + sender } )
         this.AlertCommander.Alert({
           type: payload.type ? payload.type : "error",
