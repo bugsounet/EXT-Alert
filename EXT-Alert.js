@@ -42,13 +42,12 @@ Module.register("EXT-Alert", {
     switch(noti) {
       case "GW_READY":
         if (sender.name == "Gateway") {
-          this.sendNotification("EXT_HELLO", this.name)
           this.sendSocketNotification("INIT", this.config)
-          this.ready = true
+          this.sendNotification("EXT_HELLO", this.name)
         }
         break
-      case "EXT_ALERT":
-        if (this.config.ignore.indexOf(sender.name) >= 0 || !this.ready) return
+      case "EXT_ALERT": // can be used all time (for GW starting error)
+        if (this.config.ignore.indexOf(sender.name) >= 0) return
         if (!payload) return  this.AlertCommander.Alert("error", {message: "Alert error by:" + sender } )
         this.AlertCommander.Alert({
           type: payload.type ? payload.type : "error",

@@ -1,7 +1,6 @@
 class AlertConfig {
   constructor (that) {
     if (that.config.debug) logALERT = (...args) => { console.log("[ALERT]", ...args) }
-    that.ready = false
     that.AlertDisplay = new AlertDisplay()
     that.AlertDisplay.prepareAlertPopup() // better place for create main popup quickly !
     that.AlertCommander = new AlertCommander(that)
