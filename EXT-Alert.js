@@ -26,10 +26,7 @@ Module.register("EXT-Alert", {
   },
 
   getStyles: function () {
-    return [
-      "EXT-Alert.css",
-      "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    ]
+    return [ "EXT-Alert.css" ]
   },
 
   getDom: function() {
@@ -40,13 +37,13 @@ Module.register("EXT-Alert", {
 
   notificationReceived: function(noti, payload, sender) {
     switch(noti) {
-      case "DOM_OBJECTS_CREATED":
-        this.sendSocketNotification("INIT", this.config)
+      case "GW_READY":
+        if (sender.name == "Gateway") {
+          this.sendSocketNotification("INIT", this.config)
+          this.sendNotification("EXT_HELLO", this.name)
+        }
         break
-      case "GAv5_READY":
-        if (sender.name == "MMM-GoogleAssistant") this.sendNotification("EXT_HELLO", this.name)
-        break
-      case "EXT_ALERT":
+      case "EXT_ALERT": // can be used all time (for GW starting error)
         if (this.config.ignore.indexOf(sender.name) >= 0) return
         if (!payload) return  this.AlertCommander.Alert("error", {message: "Alert error by:" + sender } )
         this.AlertCommander.Alert({
