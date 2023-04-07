@@ -102,6 +102,7 @@ class AlertCommander {
         this.AlertInformations("")
         this.AlertShift()
       }
+      e.stopPropagation()
     }, {once: true})
   }
 
