@@ -97,10 +97,11 @@ class AlertCommander {
     Alert.classList.remove('animate__bounceInDown')
     Alert.classList.add("animate__bounceOutUp")
     Alert.addEventListener('animationend', (e) => {
-    if (e.animationName == "bounceOutUp" && e.path[0].id == "EXT-Alert")
-      Alert.classList.add("hidden")
-      this.AlertInformations("")
-      this.AlertShift()
+      if (e.animationName == "bounceOutUp") {
+        Alert.classList.add("hidden")
+        this.AlertInformations("")
+        this.AlertShift()
+      }
     }, {once: true})
   }
 
