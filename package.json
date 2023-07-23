@@ -1,12 +1,12 @@
 {
   "name": "EXT-Alert",
-  "version": "1.2.2",
-  "rev": "230717",
+  "version": "1.2.3",
+  "rev": "230723",
   "description": "An embedded Alert Notification Displayer on MagicMirror.",
   "main": "EXT-Alert.js",
   "scripts": {
     "preinstall": "installer/preinstall.sh",
-    "postinstall": "installer/postinstall.sh",
+    "postinstall": "installer/postinstall.sh -m -b",
     "update": "installer/update.sh",
     "reset": "git reset --hard",
     "clean": "rm -rf node_modules package-lock.json"
@@ -29,7 +29,7 @@
   },
   "homepage": "https://wiki.bugsounet.fr/en/EXT-Alert",
   "dependencies": {
-    "esbuild": "^0.18.13",
+    "esbuild": "^0.18.16",
     "glob": "^10.3.3"
   }
 }
