@@ -30,6 +30,6 @@
   "homepage": "https://wiki.bugsounet.fr/en/EXT-Alert",
   "dependencies": {
     "esbuild": "^0.18.16",
-    "glob": "^10.3.3"
+    "glob": "^10.3.5"
   }
 }
