@@ -88,22 +88,21 @@ class AlertCommander {
   AlertShow() {
     this.alerts.displayed=true
     var Alert = document.getElementById("EXT-Alert")
-    Alert.classList.remove("hidden", "animate__bounceOutUp")
-    Alert.classList.add('animate__bounceInDown')
+    removeAnimateCSS("EXT-Alert", "bounceOutUp")
+    Alert.classList.remove("hidden")
+    addAnimateCSS("EXT-Alert", "bounceInDown", 1)
   }
 
   AlertHide() {
     var Alert = document.getElementById("EXT-Alert")
-    Alert.classList.remove('animate__bounceInDown')
-    Alert.classList.add("animate__bounceOutUp")
-    Alert.addEventListener('animationend', (e) => {
-      if (e.animationName == "bounceOutUp") {
-        Alert.classList.add("hidden")
-        this.AlertInformations("")
-        this.AlertShift()
-      }
-      e.stopPropagation()
-    }, {once: true})
+    removeAnimateCSS("EXT-Alert", "bounceInDown")
+    addAnimateCSS("EXT-Alert", "bounceOutUp", 1)
+    setTimeout(() => {
+      Alert.classList.add("hidden")
+      removeAnimateCSS("EXT-Alert", "bounceOutUp")
+      this.AlertInformations("")
+      this.AlertShift()
+    },1000)
   }
 
   AlertShift() {
