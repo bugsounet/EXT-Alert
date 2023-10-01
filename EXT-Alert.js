@@ -8,6 +8,8 @@
 logALERT = (...args) => { /* do nothing */ }
 
 Module.register("EXT-Alert", {
+  requiresVersion: "2.25.0",
+
   defaults: {
     debug: false,
     ignore: []

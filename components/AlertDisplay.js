@@ -11,8 +11,7 @@ class AlertDisplay {
     var Alert = document.createElement("div")
     Alert.id = "EXT-Alert"
     Alert.style.zoom = "80%"
-    Alert.className= "hidden animate__animated"
-    Alert.style.setProperty('--animate-duration', '1s')
+    Alert.className= "hidden"
 
     var Alert_Bar = document.createElement("div")
     Alert_Bar.id = "EXT-Alert-bar"
