@@ -39,8 +39,8 @@ Module.register("EXT-Alert", {
 
   notificationReceived: function(noti, payload, sender) {
     switch(noti) {
-      case "GW_READY":
-        if (sender.name == "Gateway") {
+      case "GA_READY":
+        if (sender.name == "MMM-GoogleAssistant") {
           this.sendSocketNotification("INIT", this.config)
           this.sendNotification("EXT_HELLO", this.name)
         }
