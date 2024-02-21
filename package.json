@@ -1,7 +1,7 @@
 {
   "name": "EXT-Alert",
-  "version": "1.4.0",
-  "rev": "240103",
+  "version": "1.4.1",
+  "rev": "240221",
   "description": "An embedded Alert Notification Displayer on MagicMirror.",
   "main": "EXT-Alert.js",
   "scripts": {
@@ -9,7 +9,9 @@
     "postinstall": "installer/postinstall.sh -m -b",
     "update": "installer/update.sh",
     "reset": "git reset --hard",
-    "clean": "rm -rf node_modules package-lock.json"
+    "clean": "rm -rf node_modules package-lock.json",
+    "lint": "eslint *.js installer/*.js components/*.js --config eslint.config.js",
+    "lint:fix": "eslint *.js installer/*.js components/*.js --config eslint.config.js --fix"
   },
   "keywords": [
     "magic mirror",
@@ -31,5 +33,11 @@
   "dependencies": {
     "esbuild": "^0.20.1",
     "glob": "^10.3.10"
+  },
+  "devDependencies": {
+    "@eslint/js": "^8.56.0",
+    "@stylistic/eslint-plugin": "^1.6.2",
+    "eslint": "^8.56.0",
+    "eslint-plugin-import": "^2.29.1"
   }
 }
