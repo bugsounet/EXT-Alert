@@ -58,3 +58,11 @@
   color: darkgray;
   margin-top: -30px;
 }
+
+.AlertProgressColor {
+  background-color: #3cba54;
+}
+
+.AlertFooterColor {
+  color: darkgray;
+}
