@@ -12,7 +12,7 @@ Module.register("EXT-Alert", {
 
   defaults: {
     debug: true,
-    style: 2,
+    style: 1,
     ignore: []
   },
 
