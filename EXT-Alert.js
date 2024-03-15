@@ -23,6 +23,7 @@ Module.register("EXT-Alert", {
     const Tools = {
       translate: (...args) => this.translate(...args)
     };
+    if (isNaN(this.config.style) || this.config.style > 2 || this.config.style < 0) this.config.style = 0;
     this.AlertCommander = new AlertCommander(this.config.style,Tools);
 
     //check ignore modules array (prevent crash)
