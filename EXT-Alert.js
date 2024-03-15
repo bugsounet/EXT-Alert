@@ -12,7 +12,7 @@ Module.register("EXT-Alert", {
 
   defaults: {
     debug: true,
-    style: 1,
+    style: 2,
     ignore: []
   },
 
@@ -34,15 +34,22 @@ Module.register("EXT-Alert", {
   },
 
   getScripts () {
-    return [
+    let Scripts = [
       "/modules/EXT-Alert/components/AlertCommander.js",
-      "/modules/EXT-Alert/components/AlertDisplay.js",
-      "/modules/EXT-Alert/node_modules/sweetalert2/dist/sweetalert2.all.min.js"
+      "/modules/EXT-Alert/components/AlertDisplay.js"
     ];
+    if (this.config.style === 1) Scripts.push("/modules/EXT-Alert/node_modules/sweetalert2/dist/sweetalert2.all.min.js");
+    if (this.config.style === 2) Scripts.push("/modules/EXT-Alert/node_modules/alertifyjs/build/alertify.min.js");
+    return Scripts;
   },
 
   getStyles () {
-    return [ "EXT-Alert.css" ];
+    let Style = [ "EXT-Alert.css" ];
+    if (this.config.style === 2) {
+      Style.push("/modules/EXT-Alert/node_modules/alertifyjs/build/css/alertify.min.css");
+      Style.push("/modules/EXT-Alert/node_modules/alertifyjs/build/css/themes/default.min.css");
+    }
+    return Style;
   },
 
   getDom () {

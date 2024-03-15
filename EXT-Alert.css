@@ -59,6 +59,8 @@
   margin-top: -30px;
 }
 
+/* sweetAlert CSS */
+
 .AlertProgressColor {
   background-color: #3cba54;
 }
@@ -66,3 +68,22 @@
 .AlertFooterColor {
   color: darkgray;
 }
+
+/* alertify css */
+
+.alertify-notifier .ajs-message {
+  width: max-content !important;
+}
+
+.alertify-notifier .ajs-message.ajs-warning {
+  background: rgba(244, 194, 13, .95) !important;
+}
+
+.alertify-notifier .ajs-message.ajs-error {
+  background: rgba(219, 50, 54, .95) !important;
+}
+
+.alertify-notifier .ajs-message.ajs-success {
+  background: rgba(60, 186, 84, .95) !important;
+}
+

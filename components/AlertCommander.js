@@ -52,9 +52,7 @@ class AlertCommander {
 
     this.alerts.buffer.push(alertObject);
     logALERT("Buffer Add:", this.alerts);
-    //this.AlertBuffer(this.alerts.buffer[0].type, this.alerts.buffer[0].info);
     this.AlertBuffer(this.alerts.buffer[0]);
-    console.log("!!!!!", this.alerts.buffer[0]);
   }
 
   /** Informations Display with translate from buffer **/
@@ -76,6 +74,9 @@ class AlertCommander {
         break;
       case 1:
         this.SweetAlert(alert,timer);
+        break;
+      case 2:
+        this.AlertifyAlert(alert, timer);
         break;
     }
   }
@@ -167,5 +168,17 @@ class AlertCommander {
   playAlert (alert) {
     if (alert.info.sound === "none") return;
     if (alert.type.sound || alert.info.sound) this.sound.src = `${alert.info.sound ? alert.info.sound : alert.type.sound}?seed=${Date.now}`;
+  }
+
+  AlertifyAlert (alert, timer) {
+    let message = `${alert.info.sender ? alert.info.sender : "EXT-Alert"}: ${alert.info.message}`;
+    alertify.set("notifier","delay", timer/1000);
+    alertify.set("notifier","position", "top-left");
+    if (alert.info.type === "error") alertify.error(message);
+    if (alert.info.type === "information") alertify.success(message);
+    if (alert.info.type === "warning") alertify.warning(message);
+    this.alerts.displayed=true;
+    this.playAlert(alert);
+    this.AlertShift();
   }
 }

@@ -34,6 +34,7 @@
   },
   "homepage": "https://wiki.bugsounet.fr/en/EXT-Alert",
   "dependencies": {
+    "alertifyjs": "^1.13.1",
     "esbuild": "^0.20.1",
     "glob": "^10.3.10",
     "sweetalert2": "^11.10.6"
