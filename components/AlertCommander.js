@@ -121,7 +121,6 @@ class AlertCommander {
     setTimeout(() => {
       Alert.classList.add("hidden");
       removeAnimateCSS("EXT-Alert", "bounceOutUp");
-      this.AlertInformations("");
       this.AlertShift();
     },1000);
   }
