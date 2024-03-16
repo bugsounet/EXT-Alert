@@ -32,6 +32,34 @@ Module.register("EXT-Alert", {
       this.config.ignore = [];
       if (tmp) this.config.ignore.push(tmp);
     }
+
+    /* test code
+    this.AlertCommander.Alert({
+      type: "error",
+      message: "Test error display",
+      timer: 5000,
+      sender: "@bugsounet"
+    });
+    this.AlertCommander.Alert({
+      type: "information",
+      message: "Test information display",
+      timer: 5000,
+      sender: "@bugsounet"
+    });
+    this.AlertCommander.Alert({
+      type: "warning",
+      message: "Test warning display",
+      timer: 5000,
+      sender: "@bugsounet"
+    });
+    this.AlertCommander.Alert({
+      type: "success",
+      message: "Test success display",
+      timer: 5000,
+      sender: "@bugsounet"
+    });
+    */
+
   },
 
   getScripts () {
@@ -57,6 +85,13 @@ Module.register("EXT-Alert", {
     var dom = document.createElement("div");
     dom.style.display = "none";
     return dom;
+  },
+
+  getTranslations () {
+    return {
+      en: "translations/en.json",
+      fr: "translations/fr.json"
+    };
   },
 
   notificationReceived (noti, payload, sender) {

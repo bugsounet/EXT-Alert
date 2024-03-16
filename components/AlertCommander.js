@@ -5,6 +5,7 @@ class AlertCommander {
       displayed: false,
       buffer: []
     };
+    this.event = ["warning", "error", "information", "info", "success"];
     this.types= [
       {
         event: "warning",
@@ -23,6 +24,18 @@ class AlertCommander {
         icon: "modules/EXT-Alert/resources/information.gif",
         timer: 5000,
         sound: null
+      },
+      {
+        event: "info",
+        icon: "modules/EXT-Alert/resources/information.gif",
+        timer: 5000,
+        sound: null
+      },
+      {
+        event: "success",
+        icon: "modules/EXT-Alert/resources/information.gif",
+        timer: 5000,
+        sound: null
       }
     ];
     this.sound= new Audio();
@@ -37,9 +50,12 @@ class AlertCommander {
       info: info
     };
     
-    this.types.forEach((type) => {
-      if (type.event === info.type) alertObject.type = type;
-    });
+    if (this.event.indexOf(info.type) < 0) {
+      logALERT("debug information:", info.type);
+      return this.Alert("warning", { message: "Alert Core: unkonw type!" });
+    }
+
+    alertObject.type = this.types.find((type) => type.event === info.type);
 
     if (!info.message) { // should not happen
       logALERT("debug information:", info);
@@ -51,7 +67,7 @@ class AlertCommander {
     }
 
     this.alerts.buffer.push(alertObject);
-    logALERT("Buffer Add:", this.alerts);
+    logALERT("Buffer Add:", alertObject);
     this.AlertBuffer(this.alerts.buffer[0]);
   }
 
@@ -65,12 +81,7 @@ class AlertCommander {
     if (timer > 30000) timer = 30000;
     switch (this.style) {
       case 0:
-        this.AlertLogo(alert);
-        this.AlertInformations(alert.info);
-        this.AlertShow();
-        this.warningTimeout = setTimeout(() => {
-          this.AlertHide();
-        }, timer);
+        this.CssAlert(alert, timer);
         break;
       case 1:
         this.SweetAlert(alert,timer);
@@ -81,20 +92,21 @@ class AlertCommander {
     }
   }
 
-  AlertInformations (message) {
-    var Message = document.getElementById("EXT-Alert-Message");
-    var Sender = document.getElementById("EXT-Alert-Sender");
-    Message.innerHTML = this.translate(message.message, { VALUES: message.values });
-    Sender.textContent = message.sender ? message.sender : "EXT-Alert";
-  }
-
-  AlertLogo (alert) {
+  CssAlert (alert,timer) {
     this.playAlert(alert);
     var Logo = document.getElementById("EXT-Alert-Icon");
+    var Message = document.getElementById("EXT-Alert-Message");
+    var Sender = document.getElementById("EXT-Alert-Sender");
     Logo.src = alert.info.icon ? alert.info.icon : alert.type.icon;
+    Message.innerHTML = this.translate(alert.info.message, { VALUES: alert.info.values });
+    Sender.textContent = alert.info.sender ? alert.info.sender : "EXT-Alert";
+    this.CssAlertShow();
+    this.warningTimeout = setTimeout(() => {
+      this.CssAlertHide();
+    }, timer);
   }
 
-  AlertShow () {
+  CssAlertShow () {
     this.alerts.displayed=true;
     var Alert = document.getElementById("EXT-Alert");
     removeAnimateCSS("EXT-Alert", "bounceOutUp");
@@ -102,7 +114,7 @@ class AlertCommander {
     addAnimateCSS("EXT-Alert", "bounceInDown", 1);
   }
 
-  AlertHide () {
+  CssAlertHide () {
     var Alert = document.getElementById("EXT-Alert");
     removeAnimateCSS("EXT-Alert", "bounceInDown");
     addAnimateCSS("EXT-Alert", "bounceOutUp", 1);
@@ -115,11 +127,16 @@ class AlertCommander {
   }
 
   AlertShift () {
+    logALERT("Buffer deleted:", this.alerts.buffer[0]);
     this.alerts.buffer.shift();
     this.alerts.displayed=false;
-    logALERT("Buffer deleted", this.alerts);
     if(this.alerts.buffer.length) this.AlertBuffer(this.alerts.buffer[0]);
     else logALERT("Buffer is now empty!");
+  }
+
+  playAlert (alert) {
+    if (alert.info.sound === "none") return;
+    if (alert.type.sound || alert.info.sound) this.sound.src = `${alert.info.sound ? alert.info.sound : alert.type.sound}?seed=${Date.now}`;
   }
 
   SweetAlert (alert,timer) {
@@ -153,10 +170,8 @@ class AlertCommander {
       },
       width: "100%",
       position: "top",
-      didOpen: () => {
-        this.alerts.displayed=true;
-        this.playAlert(alert);
-      }
+      willOpen: () => { this.alerts.displayed=true; },
+      didOpen: () => { this.playAlert(alert); }
     };
     if (alert.info.type === "error") {
       options.iconColor = "#db3236";
@@ -164,7 +179,7 @@ class AlertCommander {
       options.backdrop = true;
       options.width = "32em";
       options.position = "center";
-      options.title = "error";
+      options.title = this.translate("AlertError");
       options.imageUrl = alert.info.icon || undefined;
       options.imageWidth = 100;
       options.customClass.timerProgressBar = "AlertProgressColorError";
@@ -174,11 +189,6 @@ class AlertCommander {
       options.customClass.timerProgressBar = "AlertProgressColorWarning";
     }
     Swal.fire(options).then(() => this.AlertShift());
-  }
-
-  playAlert (alert) {
-    if (alert.info.sound === "none") return;
-    if (alert.type.sound || alert.info.sound) this.sound.src = `${alert.info.sound ? alert.info.sound : alert.type.sound}?seed=${Date.now}`;
   }
 
   AlertifyAlert (alert, timer) {
