@@ -63,6 +63,17 @@
 
 .AlertProgressColor {
   background-color: #3cba54;
+  height: 2px;
+}
+
+.AlertProgressColorError {
+  background-color: #db3236;
+  height: 2px;
+}
+
+.AlertProgressColorWarning {
+  background-color: #FFA500;
+  height: 2px;
 }
 
 .AlertFooterColor {

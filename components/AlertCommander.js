@@ -56,7 +56,7 @@ class AlertCommander {
   }
 
   /** Informations Display with translate from buffer **/
-  AlertBuffer (alert) { //type, message) {
+  AlertBuffer (alert) {
     if (this.alerts.displayed || !this.alerts.buffer.length) return;
     let timer = alert.info.timer ? alert.info.timer : alert.type.timer;
 
@@ -88,7 +88,7 @@ class AlertCommander {
     Sender.textContent = message.sender ? message.sender : "EXT-Alert";
   }
 
-  AlertLogo (alert) { //type, info) {
+  AlertLogo (alert) {
     this.playAlert(alert);
     var Logo = document.getElementById("EXT-Alert-Icon");
     Logo.src = alert.info.icon ? alert.info.icon : alert.type.icon;
@@ -123,19 +123,16 @@ class AlertCommander {
   }
 
   SweetAlert (alert,timer) {
-    Swal.fire({
-      title: alert.info.type === "error" ? alert.info.type: undefined,
+    let options = {
       html: alert.info.message,
       footer: alert.info.sender ? alert.info.sender : "EXT-Alert",
-      icon: alert.info.type === "information" ? "info": alert.info.type,
-      imageUrl: alert.info.type === "error" ? alert.info.icon : undefined,
-      imageWidth: 100,
+      icon: alert.info.type === "information" ? "success": alert.info.type,
       timer: timer,
       showConfirmButton: false,
       timerProgressBar: true,
-      backdrop: false,
       background: "rgba(33,33,33,.95)",
       color:"#ffffff",
+      toast: true,
       showClass: {
         popup: `
           animate__animated
@@ -154,15 +151,31 @@ class AlertCommander {
         timerProgressBar: "AlertProgressColor",
         footer: "AlertFooterColor"
       },
-      toast: alert.info.type === "error" ? false : true,
-      width: alert.info.type === "error" ?  "32em" : "100%",
-      position: alert.info.type === "error" ?  "center" : "top"
-    });
-    this.alerts.displayed=true;
-    this.playAlert(alert);
-    this.warningTimeout = setTimeout(() => {
-      this.AlertShift();
-    },timer);
+      width: "100%",
+      position: "top",
+      didOpen: () => {
+        this.alerts.displayed=true;
+        this.playAlert(alert);
+      }
+    };
+    //options.iconHtml = `<img src="modules/EXT-Alert/resources/information.gif">`
+    //options.customClass.icon = "AlertIcon"
+    if (alert.info.type === "error") {
+      options.iconColor = "#db3236";
+      options.toast = false;
+      options.backdrop = true;
+      options.width = "32em";
+      options.position = "center";
+      options.title = "error";
+      options.imageUrl = alert.info.icon || undefined;
+      options.imageWidth = 100;
+      options.customClass.timerProgressBar = "AlertProgressColorError";
+    }
+    if (alert.info.type === "warning") {
+      options.iconColor = "#FFA500";
+      options.customClass.timerProgressBar = "AlertProgressColorWarning";
+    }
+    Swal.fire(options).then(() => this.AlertShift());
   }
 
   playAlert (alert) {
