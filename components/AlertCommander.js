@@ -126,7 +126,7 @@ class AlertCommander {
     let options = {
       html: alert.info.message,
       footer: alert.info.sender ? alert.info.sender : "EXT-Alert",
-      icon: alert.info.type === "information" ? "success": alert.info.type,
+      icon: alert.info.type === "information" ? "info": alert.info.type,
       timer: timer,
       showConfirmButton: false,
       timerProgressBar: true,
@@ -158,8 +158,6 @@ class AlertCommander {
         this.playAlert(alert);
       }
     };
-    //options.iconHtml = `<img src="modules/EXT-Alert/resources/information.gif">`
-    //options.customClass.icon = "AlertIcon"
     if (alert.info.type === "error") {
       options.iconColor = "#db3236";
       options.toast = false;
