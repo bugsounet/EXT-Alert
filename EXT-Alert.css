@@ -98,3 +98,7 @@
   background: rgba(60, 186, 84, .95) !important;
 }
 
+.alertify-notifier .ajs-message.ajs-information {
+  background-color: rgba(72, 133, 237, .95) !important;
+}
+

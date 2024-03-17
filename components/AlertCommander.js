@@ -195,8 +195,9 @@ class AlertCommander {
     alertify.set("notifier","delay", timer/1000);
     alertify.set("notifier","position", "top-left");
     if (alert.info.type === "error") alertify.error(message);
-    if (alert.info.type === "information") alertify.success(message);
+    if (alert.info.type === "information" || alert.info.type === "info") alertify.notify(message, "information");
     if (alert.info.type === "warning") alertify.warning(message);
+    if (alert.info.type === "success") alertify.success(message);
     this.alerts.displayed=true;
     this.playAlert(alert);
     this.AlertShift();
