@@ -11,7 +11,7 @@ Module.register("EXT-Alert", {
   requiresVersion: "2.25.0",
 
   defaults: {
-    debug: true,
+    debug: false,
     style: 1,
     ignore: []
   },
