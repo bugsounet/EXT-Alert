@@ -5,7 +5,7 @@ class AlertCommander {
       displayed: false,
       buffer: []
     };
-    this.event = ["warning", "error", "information", "info", "success"];
+    this.event = ["warning", "error", "information", "success"];
     this.types= [
       {
         event: "warning",
@@ -26,14 +26,8 @@ class AlertCommander {
         sound: null
       },
       {
-        event: "info",
-        icon: "modules/EXT-Alert/resources/information.gif",
-        timer: 5000,
-        sound: null
-      },
-      {
         event: "success",
-        icon: "modules/EXT-Alert/resources/information.gif",
+        icon: "modules/EXT-Alert/resources/success.gif",
         timer: 5000,
         sound: null
       }
@@ -195,7 +189,7 @@ class AlertCommander {
     alertify.set("notifier","delay", timer/1000);
     alertify.set("notifier","position", "top-left");
     if (alert.info.type === "error") alertify.error(message);
-    if (alert.info.type === "information" || alert.info.type === "info") alertify.notify(message, "information");
+    if (alert.info.type === "information") alertify.notify(message, "information");
     if (alert.info.type === "warning") alertify.warning(message);
     if (alert.info.type === "success") alertify.success(message);
     this.alerts.displayed=true;
