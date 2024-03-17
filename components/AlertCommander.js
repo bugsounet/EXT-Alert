@@ -96,7 +96,7 @@ class AlertCommander {
     Alert.onclick = () => {
       clearTimeout(this.warningTimeout);
       this.CssAlertHide();
-    }
+    };
     Logo.src = alert.info.icon ? alert.info.icon : alert.type.icon;
     Message.innerHTML = this.translate(alert.info.message, { VALUES: alert.info.values });
     Sender.textContent = alert.info.sender ? alert.info.sender : "EXT-Alert";
