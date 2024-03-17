@@ -1,6 +1,6 @@
 /** Alert **/
 #EXT-Alert {
-  z-index:99999;
+  z-index: 100000;
   bottom:auto;
   box-sizing:border-box;
   font-family:"Roboto",sans-serif;
@@ -61,6 +61,15 @@
 
 /* sweetAlert CSS */
 
+body.swal2-shown > [aria-hidden='true'] {
+  transition: 0.1s filter;
+  filter: blur(3px);
+}
+
+.swal2-container {
+  z-index: 100000 !important;
+}
+
 .AlertProgressColor {
   background-color: #3cba54;
   height: 1px;
@@ -81,6 +90,10 @@
 }
 
 /* alertify css */
+
+.alertify-notifier {
+  z-index: 100000 !important;
+}
 
 .alertify-notifier .ajs-message {
   width: max-content !important;

@@ -164,7 +164,10 @@ class AlertCommander {
       width: "100%",
       position: "top",
       willOpen: () => { this.alerts.displayed=true; },
-      didOpen: () => { this.playAlert(alert); }
+      didOpen: (toast) => {
+        this.playAlert(alert);
+        toast.onclick = Swal.close;
+      }
     };
     if (alert.info.type === "error") {
       options.iconColor = "#db3236";
@@ -176,6 +179,7 @@ class AlertCommander {
       options.imageUrl = alert.info.icon || undefined;
       options.imageWidth = 100;
       options.customClass.timerProgressBar = "AlertProgressColorError";
+      options.heightAuto = false;
     }
     if (alert.info.type === "warning") {
       options.iconColor = "#FFA500";
