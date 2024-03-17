@@ -32,34 +32,6 @@ Module.register("EXT-Alert", {
       this.config.ignore = [];
       if (tmp) this.config.ignore.push(tmp);
     }
-
-    /* test code */
-    if (this.config.dev) {
-      this.AlertCommander.Alert({
-        type: "error",
-        message: "Test error display",
-        timer: 5000,
-        sender: "@bugsounet"
-      });
-      this.AlertCommander.Alert({
-        type: "information",
-        message: "Test information display",
-        timer: 5000,
-        sender: "@bugsounet"
-      });
-      this.AlertCommander.Alert({
-        type: "warning",
-        message: "Test warning display",
-        timer: 5000,
-        sender: "@bugsounet"
-      });
-      this.AlertCommander.Alert({
-        type: "success",
-        message: "Test success display",
-        timer: 5000,
-        sender: "@bugsounet"
-      });
-    }
   },
 
   getScripts () {
