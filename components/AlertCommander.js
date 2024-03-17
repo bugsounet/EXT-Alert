@@ -34,6 +34,7 @@ class AlertCommander {
     ];
     this.sound= new Audio();
     this.sound.autoplay= true;
+    this.warningTimeout = null;
     this.translate = (...args) => Tools.translate(...args);
     console.log("[ALERT] AlertCommander Ready");
   }
@@ -88,9 +89,14 @@ class AlertCommander {
 
   CssAlert (alert,timer) {
     this.playAlert(alert);
+    var Alert = document.getElementById("EXT-Alert");
     var Logo = document.getElementById("EXT-Alert-Icon");
     var Message = document.getElementById("EXT-Alert-Message");
     var Sender = document.getElementById("EXT-Alert-Sender");
+    Alert.onclick = () => {
+      clearTimeout(this.warningTimeout);
+      this.CssAlertHide();
+    }
     Logo.src = alert.info.icon ? alert.info.icon : alert.type.icon;
     Message.innerHTML = this.translate(alert.info.message, { VALUES: alert.info.values });
     Sender.textContent = alert.info.sender ? alert.info.sender : "EXT-Alert";
