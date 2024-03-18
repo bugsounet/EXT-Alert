@@ -139,8 +139,9 @@ class AlertCommander {
   }
 
   SweetAlert (alert,timer) {
+    let message = `<div class= "AlertMessageContainer"><img class= "AlertMessageIcon" src=${alert.info.icon}></img>${alert.info.message}</div>`;
     let options = {
-      html: alert.info.message,
+      html: alert.info.icon ? message : alert.info.message,
       footer: alert.info.sender ? alert.info.sender : "EXT-Alert",
       icon: alert.info.type === "information" ? "info": alert.info.type,
       timer: timer,
@@ -176,6 +177,7 @@ class AlertCommander {
       }
     };
     if (alert.info.type === "error") {
+      options.html = alert.info.message;
       options.iconColor = "#db3236";
       options.toast = false;
       options.backdrop = true;

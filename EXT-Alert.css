@@ -89,6 +89,17 @@ body.swal2-shown > [aria-hidden='true'] {
   color: darkgray;
 }
 
+.AlertMessageContainer {
+  display: inline-flex;
+  align-items: center;
+}
+
+.AlertMessageIcon {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+
 /* alertify css */
 
 .alertify-notifier {
