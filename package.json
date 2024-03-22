@@ -1,7 +1,7 @@
 {
   "name": "EXT-Alert",
-  "version": "1.4.2",
-  "rev": "240303",
+  "version": "2.0.0",
+  "rev": "240323",
   "description": "An embedded Alert Notification Displayer on MagicMirror.",
   "main": "EXT-Alert.js",
   "scripts": {
@@ -34,12 +34,14 @@
   },
   "homepage": "https://wiki.bugsounet.fr/en/EXT-Alert",
   "dependencies": {
-    "esbuild": "^0.20.1",
-    "glob": "^10.3.10"
+    "alertifyjs": "^1.13.1",
+    "esbuild": "^0.20.2",
+    "glob": "^10.3.10",
+    "sweetalert2": "^11.10.6"
   },
   "devDependencies": {
     "@eslint/js": "^8.57.0",
-    "@stylistic/eslint-plugin": "^1.6.3",
+    "@stylistic/eslint-plugin": "^1.7.0",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1"
   }

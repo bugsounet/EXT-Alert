@@ -7,11 +7,11 @@ It allow to display Alert and Notification of MagicMirror
 With `MMM-GoogleAssistant`, this module replace the default alert module !
 
 ## Screenshot
-![](https://raw.githubusercontent.com/bugsounet/EXT-Alert/dev/informationShot.png)
+![](https://raw.githubusercontent.com/bugsounet/EXT-Alert/dev/screenshot/informationShot.png)
 
-![](https://raw.githubusercontent.com/bugsounet/EXT-Alert/dev/warningShot.png)
+![](https://raw.githubusercontent.com/bugsounet/EXT-Alert/dev/screenshot/warningShot.png)
 
-![](https://raw.githubusercontent.com/bugsounet/EXT-Alert/dev/errorShot.png)
+![](https://raw.githubusercontent.com/bugsounet/EXT-Alert/dev/screenshot/errorShot.png)
 
 ## Installation / update / configuration
 

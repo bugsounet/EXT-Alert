@@ -1,9 +1,11 @@
 class AlertCommander {
-  constructor (Tools) {
+  constructor (style,Tools) {
+    this.style = style;
     this.alerts= {
       displayed: false,
       buffer: []
     };
+    this.event = ["warning", "error", "information", "success"];
     this.types= [
       {
         event: "warning",
@@ -22,10 +24,17 @@ class AlertCommander {
         icon: "modules/EXT-Alert/resources/information.gif",
         timer: 5000,
         sound: null
+      },
+      {
+        event: "success",
+        icon: "modules/EXT-Alert/resources/success.gif",
+        timer: 5000,
+        sound: null
       }
     ];
     this.sound= new Audio();
     this.sound.autoplay= true;
+    this.warningTimeout = null;
     this.translate = (...args) => Tools.translate(...args);
     console.log("[ALERT] AlertCommander Ready");
   }
@@ -36,9 +45,13 @@ class AlertCommander {
       info: info
     };
     
-    this.types.forEach((type) => {
-      if (type.event === info.type) alertObject.type = type;
-    });
+    if (this.event.indexOf(info.type) < 0) {
+      logALERT("debug information:", info.type);
+      return this.Alert("warning", { message: "Alert Core: unkonw type!" });
+    }
+
+    alertObject.type = this.types.find((type) => type.event === info.type);
+
     if (!info.message) { // should not happen
       logALERT("debug information:", info);
       return this.Alert("warning", { message: "Alert Core: No message!" });
@@ -49,43 +62,51 @@ class AlertCommander {
     }
 
     this.alerts.buffer.push(alertObject);
-    logALERT("Buffer Add:", this.alerts);
-    this.AlertBuffer(this.alerts.buffer[0].type, this.alerts.buffer[0].info);
+    logALERT("Buffer Add:", alertObject);
+    this.AlertBuffer(this.alerts.buffer[0]);
   }
 
   /** Informations Display with translate from buffer **/
-  AlertBuffer (type, message) {
+  AlertBuffer (alert) {
     if (this.alerts.displayed || !this.alerts.buffer.length) return;
-    this.AlertLogo(type, message);
-    this.AlertInformations(message);
-    this.AlertShow();
-
-    let timer = message.timer ? message.timer : type.timer;
+    let timer = alert.info.timer ? alert.info.timer : alert.type.timer;
 
     // define timer limit...
     if (timer < 3000) timer = 3000;
     if (timer > 30000) timer = 30000;
+    switch (this.style) {
+      case 0:
+        this.CssAlert(alert, timer);
+        break;
+      case 1:
+        this.SweetAlert(alert,timer);
+        break;
+      case 2:
+        this.AlertifyAlert(alert, timer);
+        break;
+    }
+  }
 
+  CssAlert (alert,timer) {
+    this.playAlert(alert);
+    var Alert = document.getElementById("EXT-Alert");
+    var Logo = document.getElementById("EXT-Alert-Icon");
+    var Message = document.getElementById("EXT-Alert-Message");
+    var Sender = document.getElementById("EXT-Alert-Sender");
+    Alert.onclick = () => {
+      clearTimeout(this.warningTimeout);
+      this.CssAlertHide();
+    };
+    Logo.src = alert.info.icon ? alert.info.icon : alert.type.icon;
+    Message.innerHTML = this.translate(alert.info.message, { VALUES: alert.info.values });
+    Sender.textContent = alert.info.sender ? alert.info.sender : "EXT-Alert";
+    this.CssAlertShow();
     this.warningTimeout = setTimeout(() => {
-      this.AlertHide();
+      this.CssAlertHide();
     }, timer);
   }
 
-  AlertInformations (message) {
-    var Message = document.getElementById("EXT-Alert-Message");
-    var Sender = document.getElementById("EXT-Alert-Sender");
-    Message.innerHTML = this.translate(message.message, { VALUES: message.values });
-    Sender.textContent = message.sender ? message.sender : "EXT-Alert";
-  }
-
-  AlertLogo (type, info) {
-    var Logo = document.getElementById("EXT-Alert-Icon");
-    Logo.src = info.icon ? info.icon : type.icon;
-    if (info.sound === "none") return;
-    if (type.sound || info.sound) this.sound.src = `${info.sound ? info.sound : type.sound  }?seed=${Date.now}`;
-  }
-
-  AlertShow () {
+  CssAlertShow () {
     this.alerts.displayed=true;
     var Alert = document.getElementById("EXT-Alert");
     removeAnimateCSS("EXT-Alert", "bounceOutUp");
@@ -93,23 +114,98 @@ class AlertCommander {
     addAnimateCSS("EXT-Alert", "bounceInDown", 1);
   }
 
-  AlertHide () {
+  CssAlertHide () {
     var Alert = document.getElementById("EXT-Alert");
     removeAnimateCSS("EXT-Alert", "bounceInDown");
     addAnimateCSS("EXT-Alert", "bounceOutUp", 1);
     setTimeout(() => {
       Alert.classList.add("hidden");
       removeAnimateCSS("EXT-Alert", "bounceOutUp");
-      this.AlertInformations("");
       this.AlertShift();
     },1000);
   }
 
   AlertShift () {
+    logALERT("Buffer deleted:", this.alerts.buffer[0]);
     this.alerts.buffer.shift();
     this.alerts.displayed=false;
-    logALERT("Buffer deleted", this.alerts);
-    if(this.alerts.buffer.length) this.AlertBuffer(this.alerts.buffer[0].type, this.alerts.buffer[0].info);
+    if(this.alerts.buffer.length) this.AlertBuffer(this.alerts.buffer[0]);
     else logALERT("Buffer is now empty!");
+  }
+
+  playAlert (alert) {
+    if (alert.info.sound === "none") return;
+    if (alert.type.sound || alert.info.sound) this.sound.src = `${alert.info.sound ? alert.info.sound : alert.type.sound}?seed=${Date.now}`;
+  }
+
+  SweetAlert (alert,timer) {
+    let message = `<div class= "AlertMessageContainer"><img class= "AlertMessageIcon" src=${alert.info.icon}></img>${alert.info.message}</div>`;
+    let options = {
+      html: alert.info.icon ? message : alert.info.message,
+      footer: alert.info.sender ? alert.info.sender : "EXT-Alert",
+      icon: alert.info.type === "information" ? "info": alert.info.type,
+      timer: timer,
+      showConfirmButton: false,
+      timerProgressBar: true,
+      background: "rgba(33,33,33,.95)",
+      color:"#ffffff",
+      toast: true,
+      showClass: {
+        popup: `
+          animate__animated
+          animate__fadeInDown
+          animate__faster
+        `
+      },
+      hideClass: {
+        popup: `
+          animate__animated
+          animate__zoomOutUp
+          animate__faster
+        `
+      },
+      customClass: {
+        timerProgressBar: "AlertProgressColor",
+        footer: "AlertFooterColor"
+      },
+      width: "100%",
+      position: "top",
+      willOpen: () => { this.alerts.displayed=true; },
+      didOpen: (toast) => {
+        this.playAlert(alert);
+        toast.onclick = Swal.close;
+      }
+    };
+    if (alert.info.type === "error") {
+      options.html = alert.info.message;
+      options.iconColor = "#db3236";
+      options.toast = false;
+      options.backdrop = true;
+      options.width = "32em";
+      options.position = "center";
+      options.title = this.translate("AlertError");
+      options.imageUrl = alert.info.icon || undefined;
+      options.imageWidth = 100;
+      options.customClass.timerProgressBar = "AlertProgressColorError";
+      options.heightAuto = false;
+    }
+    if (alert.info.type === "warning") {
+      options.iconColor = "#FFA500";
+      options.customClass.timerProgressBar = "AlertProgressColorWarning";
+    }
+    Swal.fire(options).then(() => this.AlertShift());
+  }
+
+  AlertifyAlert (alert, timer) {
+    let message = `${alert.info.sender ? alert.info.sender : "EXT-Alert"}: ${alert.info.message}`;
+    alertify.set("notifier","delay", timer/1000);
+    alertify.set("notifier","position", "top-left");
+    if (alert.info.type === "error") alertify.error(message);
+    if (alert.info.type === "information") alertify.notify(message, "information");
+    if (alert.info.type === "warning") alertify.warning(message);
+    if (alert.info.type === "success") alertify.success(message);
+    this.alerts.displayed=true;
+    this.playAlert(alert);
+    this.AlertShift();
   }
 }
