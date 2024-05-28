@@ -1,7 +1,7 @@
 {
   "name": "EXT-Alert",
-  "version": "2.0.0",
-  "rev": "240323",
+  "version": "2.0.1",
+  "rev": "240528",
   "description": "An embedded Alert Notification Displayer on MagicMirror.",
   "main": "EXT-Alert.js",
   "scripts": {
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^8.57.0",
-    "@stylistic/eslint-plugin": "^2.1.0",
+    "@stylistic/eslint-plugin": "^1.8.1",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1"
   }
