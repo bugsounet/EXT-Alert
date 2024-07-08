@@ -39,7 +39,7 @@
   "dependencies": {
     "alertifyjs": "^1.14.0",
     "esbuild": "^0.22.0",
-    "glob": "^10.4.2",
+    "glob": "^10.4.3",
     "sweetalert2": "^11.12.1"
   },
   "devDependencies": {
